@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - IBACCO Ice Cream</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #FF4B4B, #FF914D, #FFD93D, #6FCF97, #56CCF2, #9B51E0, #FF69B4);
+      min-height: 100vh;
+      margin: 0;
+      padding-bottom: 60px; /* for footer */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .navbar {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #ff4b91;
+      z-index: 999;
+    }
+
+    .login-card {
+      background-color: rgba(173, 216, 230, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      animation: fadeIn 0.8s ease;
+      margin-top: 120px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-family: 'Fredoka One', cursive;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ff4081;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #ff4081;
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(255, 64, 129, 0.25);
+    }
+
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(to right, #ff4081, #ff80ab);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(to right, #ff80ab, #ff4081);
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 500;
+      display: none;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #ff4b91;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.9rem;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">🍦 IBACCO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="About.html">About</a></li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search">
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- LOGIN FORM -->
+<div class="login-card">
+  <h2>IBACCO Login</h2>
+  <form id="loginForm">
+    <label for="username">Username</label>
+    <input type="text" id="username" placeholder="Enter username" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter password" required>
+
+    <button type="submit" class="btn-login">Login</button>
+
+    <div class="links">
+      <a href="forget.html">Forgot Password?</a>
+      <a href="signup.html">Create Account</a>
+    </div>
+    <div class="message" id="loginMessage"></div>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 IBACCO Ice Cream – Spreading Joy, One Scoop at a Time 🍨
+</footer>
+
+<script>
+  $(document).ready(function () {
+    function isStrongPassword(password) {
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/;
+      return pattern.test(password);
+    }
+
+    $('#loginForm').submit(function (e) {
+      e.preventDefault();
+      const username = $('#username').val().trim();
+      const password = $('#password').val().trim();
+      const message = $('#loginMessage');
+
+      if (!username || !password) {
+        message.text('Please fill in all fields.').css('color', 'red').fadeIn();
+        return;
+      }
+
+      if (!isStrongPassword(password)) {
+        message.html('Password must be at least 8 characters and include:<br>Uppercase, lowercase, number, special character.')
+               .css('color', 'red').fadeIn();
+        return;
+      }
+
+      message.text('Authenticating...').css('color', '#007bff').fadeIn();
+
+      setTimeout(() => {
+        message.text('Login successful! Redirecting...').css('color', '#28a745');
+      }, 1500);
+
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 3000);
+    });
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

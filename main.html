@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IBACCO - Ice Cream World</title>
+  <meta name="description" content="Welcome to IBACCO Ice Cream World. Where every scoop brings a smile!">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1740&q=80') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    main {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-section {
+      position: relative;
+      width: 100%;
+      padding: 60px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .overlay {
+      position: absolute;
+      background-color: rgba(255, 105, 180, 0.75);
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero-text h1 {
+      font-size: 3.5rem;
+      font-family: 'Fredoka One', cursive;
+      background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80, #facc15, #f87171);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 3s linear infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-text p {
+      font-size: 1.3rem;
+      margin-top: 10px;
+    }
+
+    .btn-custom {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 14px 32px;
+      border-radius: 50px;
+      background-color: #ffffff;
+      color: #ff1493;
+      font-weight: bold;
+      border: 2px solid #ff1493;
+      font-size: 1rem;
+      animation: bounce 1.5s infinite, glow 3s infinite ease-in-out;
+      text-decoration: none;
+    }
+
+    .btn-custom:hover {
+      background-color: #ff1493;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+      50% { box-shadow: 0 0 20px #ff1493, 0 0 30px #ff1493; }
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: rise 4s linear forwards;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes rise {
+      0% { bottom: 0; opacity: 1; }
+      100% { bottom: 100%; opacity: 0; }
+    }
+
+    footer {
+      background-color: #ff69b4;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-text h1 { font-size: 2.2rem; }
+      .hero-text p { font-size: 1rem; }
+      .btn-custom { padding: 12px 24px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="hero-section">
+      <div class="overlay" aria-hidden="true"></div>
+      <div class="hero-text">
+        <h1 id="typewriter" role="heading" aria-label="Welcome to IBACCO"></h1>
+        <p>Where every scoop brings a smile!</p>
+        <a href="index.html" class="btn-custom" aria-label="Explore our ice cream products">Explore Products</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🔗 Hidden reference to main.html to prevent VS Code warnings -->
+  <a href="main.html" style="display:none;">Go to Main Page</a>
+
+  <footer>
+    <p>© 2025 IBACCO Ice Cream | Crafted with love and flavor</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const text = "Welcome to IBACCO 🍦";
+      const typewriter = document.getElementById("typewriter");
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          typewriter.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, 100);
+        }
+      }
+      type();
+
+      const emojis = ["🍦", "🍨", "🍧", "🍭", "🧁", "🎉"];
+      const maxEmojis = 30;
+      let currentEmojis = 0;
+
+      setInterval(() => {
+        if (currentEmojis < maxEmojis) {
+          const e = document.createElement("div");
+          e.className = "emoji";
+          e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+          e.style.left = Math.random() * 100 + "vw";
+          e.style.animationDuration = (2 + Math.random() * 3) + "s";
+          e.style.fontSize = Math.random() * 2 + 1 + "rem";
+          e.style.bottom = "0px";
+          document.body.appendChild(e);
+          currentEmojis++;
+
+          setTimeout(() => {
+            e.remove();
+            currentEmojis--;
+          }, 5000);
+        }
+      }, 600);
+    });
+  </script>
+
+</body>
+</html>
